@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { WordInfo } from 'src/app/models/WordInfo';
+import { DictionaryService } from '../../services/dictionary.service';
 
 @Component({
   selector: 'app-dictionary-home',
@@ -8,57 +10,32 @@ import { Component, OnInit } from '@angular/core';
   ]
 })
 export class DictionaryHomeComponent implements OnInit {
-  wordInfo: any = {
-    "word": "dictionary",
-    "phonetics": [
-      {
-        "text": "/ˈdɪkʃəˌnɛri/",
-        "audio": "https://lex-audio.useremarkable.com/mp3/dictionary_us_1.mp3"
-      }
-    ],
-    "meanings": [
-      {
-        "partOfSpeech": "noun",
-        "definitions": [
-          {
-            "definition": "A book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage.",
-            "example": "I'll look up ‘love’ in the dictionary",
-            "synonyms": [
-              "lexicon",
-              "wordbook",
-              "glossary",
-              "vocabulary list",
-              "vocabulary",
-              "word list",
-              "wordfinder"
-            ]
-          }
-        ]
-      },
-      {
-        "partOfSpeech": "verb",
-        "definitions": [
-          {
-            "definition": "A book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language, often also providing information about pronunciation, origin, and usage.",
-            "example": "I'll look up ‘love’ in the dictionary",
-            "synonyms": [
-              "lexicon",
-              "wordbook",
-              "glossary",
-              "vocabulary list",
-              "vocabulary",
-              "word list",
-              "wordfinder"
-            ]
-          }
-        ]
-      }
-    ]
-  };
+  wordInfo: WordInfo;
+  hello: string = 'hello world';
 
-  constructor() { }
+  words = ['a','b','c'];
+
+  constructor(private dictionaryService: DictionaryService) {}
 
   ngOnInit(): void {
+    this.dictionaryService.getDictionaryMeaning('dictionary').subscribe(wInfo => {
+      this.wordInfo = wInfo;
+      console.log(this.wordInfo);
+    });
+    // this.wordInfo = {
+    //   word : '',
+    //   phonetics : [],
+    //   meanings : []
+    // };
+  }
+
+  getMeaning(word:string){
+    this.dictionaryService.getDictionaryMeaning(word).subscribe(wInfo => {
+      this.wordInfo = wInfo;
+      console.log(this.wordInfo);
+      this.hello = 'FJENFJKSAENGFNskjdnkjnfjknsfd';
+    });
+    console.log(this.wordInfo);
   }
 
 }
