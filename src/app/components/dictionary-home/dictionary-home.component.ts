@@ -13,6 +13,8 @@ export class DictionaryHomeComponent implements OnInit {
   wordInfo: WordInfo;
   audio:any;
   disableBtn:boolean = true;
+  recentWords:string[] = [];
+  iError:boolean = false;
 
   constructor(private dictionaryService: DictionaryService) {}
 
@@ -22,11 +24,16 @@ export class DictionaryHomeComponent implements OnInit {
 
   getMeaning(word:string){
     this.dictionaryService.getDictionaryMeaning(word).subscribe(wInfo => {
+      this.iError = false;
       this.wordInfo = wInfo;
       this.audio.src = this.wordInfo[0].phonetics[0].audio;
+      if(!this.recentWords.includes(word)) this.recentWords.unshift(word);
       if(this.audio.src.length > 0) this.disableBtn = false;
-      console.log(this.wordInfo);
+    }, err => {
+      this.iError = true;
     });
+    if(this.recentWords.length > 4) this.recentWords.length = 4;
+    console.log(this.recentWords);
   }
 
   playWordAudio(){

@@ -1,0 +1,20 @@
+Prerequisites : Node.js, npm
+
+To install angular cli > npm install -g @angular/cli
+
+To create a new project > ng new project-name
+
+To run the project > ng serve
+
+To add angular material > ng add @angular/material
+
+To use the necessary angular material modules(Eg:MatButtonModule); In app.module.ts -> import the respective module and add the module in imports
+
+To make a commit in git -> First add the necessary files using 
+    >git add <filenames> 
+    >git add .  // to add all changed or new unignored files
+    >git commit -m "commit message goes here"
+
+To restore git folder from .git.zip -> in command line >git reset head --hard
+
+To ignore a file to be pushed in git -> add the filename in .gitignore file
