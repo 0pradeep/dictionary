@@ -11,31 +11,27 @@ import { DictionaryService } from '../../services/dictionary.service';
 })
 export class DictionaryHomeComponent implements OnInit {
   wordInfo: WordInfo;
-  hello: string = 'hello world';
-
-  words = ['a','b','c'];
+  audio:any;
+  disableBtn:boolean = true;
 
   constructor(private dictionaryService: DictionaryService) {}
 
   ngOnInit(): void {
-    this.dictionaryService.getDictionaryMeaning('dictionary').subscribe(wInfo => {
-      this.wordInfo = wInfo;
-      console.log(this.wordInfo);
-    });
-    // this.wordInfo = {
-    //   word : '',
-    //   phonetics : [],
-    //   meanings : []
-    // };
+    this.audio = new Audio();
   }
 
   getMeaning(word:string){
     this.dictionaryService.getDictionaryMeaning(word).subscribe(wInfo => {
       this.wordInfo = wInfo;
+      this.audio.src = this.wordInfo[0].phonetics[0].audio;
+      if(this.audio.src.length > 0) this.disableBtn = false;
       console.log(this.wordInfo);
-      this.hello = 'FJENFJKSAENGFNskjdnkjnfjknsfd';
     });
-    console.log(this.wordInfo);
+  }
+
+  playWordAudio(){
+    this.audio.load();
+    this.audio.play();
   }
 
 }

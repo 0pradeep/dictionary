@@ -12,5 +12,5 @@ class WordMeaning{
 export class WordInfo{
     word: string;
     phonetics: any[];
-    meanings: any[];
+    meanings: WordMeaning;
 }

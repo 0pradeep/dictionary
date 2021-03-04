@@ -1,20 +1,37 @@
-<mat-form-field appearance="outline" style="width: 400px; padding-left: 30%; padding-top: 5%;">
-    <input #word (keydown.enter)="getMeaning(word.value)" style="padding-left: 27%; font-weight: 500; font-size: large;" matInput placeholder="...Search keyword...">
+<mat-form-field appearance="outline" style="width: 50%; padding-left: 20%; padding-top: 5%;">
+    <input #word (keydown.enter)="getMeaning(word.value)" style="padding-left: 33%; font-weight: 500; font-size: large;"
+        matInput placeholder="...Search keyword...">
 </mat-form-field>
+<div>
+    <mat-label style="padding-left: 20%; font-weight: 500; font-size: medium;">Meanings</mat-label>
+    <button style="float: right;" mat-stroked-button style="margin-right: 30%; float: right;" (click)="playWordAudio()" [disabled]="disableBtn">
+        Play
+        <mat-icon>play_arrow</mat-icon>
+    </button>
+</div>
 <br>
-<mat-label style="padding-left: 30%; font-weight: 400; font-size: medium;">Meanings</mat-label>
-<button mat-stroked-button style="margin-right: 30%; float: right;">
-    Play
-    <mat-icon>play_arrow</mat-icon>
-</button>
-<br><br>
-<div *ngIf="wordInfo !== undefined" style="padding:0 30%;">
-    <mat-list>
-        <list-item *ngFor="let meaning of wordInfo[0].meanings">
-            <mat-icon>arrow_right</mat-icon>
-            <mat-label style="font-weight: 400; font-size: large;">{{ wordInfo[0].word }} ({{ meaning.partOfSpeech }})</mat-label><br>
-            <span style="padding-left: 10%;">{{ meaning.definitions[0].definition }}</span>
-            <br>
+<div *ngIf="wordInfo !== undefined" style="padding:0 25%;">
+    <mat-list *ngFor="let wInfo of wordInfo">
+        <list-item *ngFor="let d of wInfo.meanings">
+            <span *ngFor="let df of d.definitions">
+
+                <mat-label style="font-weight: 500; font-size: large; display: flex; align-items: center;">
+                    <mat-icon>arrow_right</mat-icon>
+                    {{ wInfo.word }} ({{d.partOfSpeech}})
+                </mat-label>
+                <p style="padding-left: 8%; position: relative;">{{ df.definition }}</p>
+            </span>
         </list-item>
     </mat-list>
 </div>
+
+<!-- <div *ngIf="wordInfo !== undefined" style="padding:0 30%;">
+    <div >
+    <mat-list *ngFor="let wInfo of wordInfo">
+        <list-item *ngFor="let defn of wordInfo.meanings[0].definitions">
+            <mat-icon>arrow_right</mat-icon>
+        </list-item>
+        <br>
+    </mat-list>
+    </div>
+</div> -->
